@@ -30,7 +30,7 @@ export function StaticFallback() {
   if (mode === 'canvas') return null;
 
   return (
-    <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-[1]">
+    <div aria-hidden="true" className="static-fallback pointer-events-none fixed inset-0 z-[1]">
       {/* Where the thread would run. */}
       <span className="absolute inset-y-0 left-[7%] w-px bg-[var(--hairline)] md:left-[62%]" />
 
@@ -39,8 +39,8 @@ export function StaticFallback() {
         <img
           src="/assets/photos/cone-still.png"
           alt=""
-          width={1440}
-          height={1800}
+          width={720}
+          height={900}
           decoding="async"
           className="absolute right-[4vw] top-[20vh] h-auto w-[42vw] max-w-[360px] md:right-[9vw] md:top-[16vh]"
         />

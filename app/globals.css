@@ -135,6 +135,11 @@
 }
 
 @layer components {
+  /* Set by the inline probe in the document head, before first paint. */
+  html[data-canvas='1'] .static-fallback {
+    display: none;
+  }
+
   /* The tail of the footer knot drawing the mark: one continuous stroke.
      260 is comfortably longer than the path, so the dash fully clears it. */
   .lotus-draw {

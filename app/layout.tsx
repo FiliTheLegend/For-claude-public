@@ -33,6 +33,26 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en-IN" className={fontVariables}>
+      <head>
+        {/*
+          The Static-tier still is in the server HTML on purpose — it is what a
+          visitor with JavaScript disabled gets. But on a capable device that
+          means a frame of cone image before React can decide the tier and
+          remove it. This runs before first paint, marks the document, and CSS
+          hides the fallback immediately. Deliberately tiny and synchronous: it
+          has to beat the first paint, and it does nothing but set one
+          attribute.
+        */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{var c=document.createElement('canvas');" +
+              "if(c.getContext('webgl2')&&!matchMedia('(prefers-reduced-motion: reduce)').matches" +
+              "&&!(navigator.connection&&navigator.connection.saveData))" +
+              "document.documentElement.dataset.canvas='1'}catch(e){}",
+          }}
+        />
+      </head>
       <body>
         <a href="#main" className="skip-link">
           Skip to content

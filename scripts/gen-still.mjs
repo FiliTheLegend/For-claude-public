@@ -27,14 +27,26 @@ const browser = await chromium.launch({
   ],
 });
 
+// 1x, not 2x. The still displays at most 360 CSS px wide, so 720x900 is
+// already a 2x source — and this image exists to serve the *slowest* devices
+// on the site. A 680KB PNG fallback would defeat its own purpose.
 const page = await browser.newPage({
   viewport: { width: W, height: H },
-  deviceScaleFactor: 2,
+  deviceScaleFactor: 1,
 });
 
-await page.goto(`http://localhost:3000/lab/cone/?ui=0&rot=0&d=0&z=2.9`, {
+// The lab route inherits the root layout, so the site chrome would otherwise
+// be baked into the still. Hide it before shooting rather than building a
+// second layout just for a screenshot.
+await page.addStyleTag({
+  content: 'header,footer,[data-lab-ui],nextjs-portal{display:none!important}',
+});
+await page.goto(`http://localhost:3000/lab/cone/?ui=0&rot=0&d=0&z=2.75`, {
   waitUntil: 'networkidle',
   timeout: 60000,
+});
+await page.addStyleTag({
+  content: 'header,footer,[data-lab-ui],nextjs-portal{display:none!important}',
 });
 await page.waitForTimeout(6000);
 

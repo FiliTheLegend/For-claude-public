@@ -21,7 +21,7 @@ Current gzipped transfer for `/`, measured against the exported site with
 | Site code, routes, prefetches | ~43 KB |
 | **Total JavaScript** | **353 KB** |
 | Fonts | 267 KB |
-| Textures (lazy, with the canvas) | 221 KB |
+| Images, incl. lazy textures | 189 KB |
 
 The budget is 320KB. three.js alone is 167KB and React plus the Next runtime is
 about 98KB — 265KB before a single line of this site or any way to put three.js
