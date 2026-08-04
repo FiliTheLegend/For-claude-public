@@ -1,0 +1,196 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-paper: #ffffff;
+  --color-paper-2: #f4f5f3;
+  --color-ink: #10161c;
+  --color-indigo: #1c3055;
+  --color-indigo-deep: #0e1b33;
+  --color-brass: #a8874e;
+
+  --font-display: var(--font-newsreader), Georgia, 'Times New Roman', serif;
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, 'SF Mono', monospace;
+
+  --radius-none: 0px;
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+@layer base {
+  :root {
+    --hairline: color-mix(in oklab, var(--color-ink) 12%, transparent);
+    --hairline-strong: color-mix(in oklab, var(--color-ink) 22%, transparent);
+    color-scheme: light;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: auto;
+  }
+
+  /* Lenis owns scrolling once it boots. Until then the page scrolls natively,
+     so content is usable before any JS lands. */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.018em;
+    text-wrap: balance;
+  }
+
+  /* Push the optical-size axis up on large display type. */
+  .display-xl {
+    font-variation-settings: 'opsz' 72;
+  }
+  .display-lg {
+    font-variation-settings: 'opsz' 48;
+  }
+  .display-md {
+    font-variation-settings: 'opsz' 28;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--color-indigo) 16%, transparent);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brass);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* Every numeral on this site is tabular. */
+  .num {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum' 1;
+    letter-spacing: -0.01em;
+  }
+}
+
+@layer components {
+  .measure {
+    max-width: 62ch;
+  }
+
+  .rule {
+    border: 0;
+    border-top: 1px solid var(--hairline);
+  }
+
+  .rule-brass {
+    border: 0;
+    border-top: 1px solid color-mix(in oklab, var(--color-brass) 55%, transparent);
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: color-mix(in oklab, var(--color-ink) 55%, transparent);
+  }
+
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 100;
+    background: var(--color-ink);
+    color: var(--color-paper);
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+  .skip-link:focus {
+    left: 12px;
+    top: 12px;
+  }
+}
+
+@layer components {
+  /* The tail of the footer knot drawing the mark: one continuous stroke.
+     260 is comfortably longer than the path, so the dash fully clears it. */
+  .lotus-draw {
+    stroke-dasharray: 260;
+    stroke-dashoffset: 260;
+    animation: lotus-draw 1.6s var(--ease-out-expo) forwards;
+    animation-timeline: view();
+    animation-range: entry 10% cover 42%;
+  }
+
+  /* Browsers without scroll-driven animations get the mark immediately —
+     never a permanently invisible logo. */
+  @supports not (animation-timeline: view()) {
+    .lotus-draw {
+      stroke-dashoffset: 0;
+      animation: none;
+    }
+  }
+
+  @keyframes lotus-draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  /* First-load intro, DOM half: the wordmark draws in beneath the cone.
+     Keyed off a data attribute the intro module sets, so with JS disabled the
+     hero is simply visible. */
+  html[data-intro='running'] .intro-rise {
+    animation: intro-rise 900ms var(--ease-out-expo) 620ms both;
+  }
+
+  @keyframes intro-rise {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .lotus-draw {
+    stroke-dashoffset: 0;
+    animation: none;
+  }
+}

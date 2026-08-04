@@ -1,0 +1,34 @@
+{
+  "name": "lotus-syndicate",
+  "version": "2.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build && node scripts/postbuild.mjs",
+    "start": "npx serve out",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "textures": "node scripts/gen-textures.mjs",
+    "stills": "node scripts/gen-still.mjs",
+    "measure": "node scripts/measure.mjs"
+  },
+  "dependencies": {
+    "@react-three/fiber": "^9.3.0",
+    "geist": "^1.3.1",
+    "lenis": "^1.1.20",
+    "next": "^15.1.6",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "three": "^0.170.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.0.0",
+    "@types/node": "^22.10.5",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "@types/three": "^0.170.0",
+    "playwright": "^1.49.1",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.7.3"
+  }
+}

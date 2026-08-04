@@ -1,0 +1,56 @@
+import type { Metadata, Viewport } from 'next';
+import { fontVariables } from './fonts';
+import { Nav } from '@/components/dom/Nav';
+import { Footer } from '@/components/dom/Footer';
+import { SmoothScroll } from '@/components/dom/SmoothScroll';
+import { SceneMount } from '@/components/three/SceneMount';
+import { StaticFallback } from '@/components/dom/StaticFallback';
+import './globals.css';
+
+export const metadata: Metadata = {
+  metadataBase: new URL('https://lotussyndicate.com'),
+  title: {
+    default: 'Lotus Syndicate — Yarn marketing agents, Coimbatore',
+    template: '%s — Lotus Syndicate',
+  },
+  description:
+    'Dedicated yarn marketing agents for spinning mills across Tamil Nadu and South India since 1974. Commission 0.5%–2% on ex-mill invoice value, direct billing, bad debts on our account.',
+  openGraph: {
+    type: 'website',
+    locale: 'en_IN',
+    siteName: 'Lotus Syndicate',
+    images: [{ url: '/assets/og/default.png', width: 1200, height: 630 }],
+  },
+  robots: { index: true, follow: true },
+};
+
+export const viewport: Viewport = {
+  themeColor: '#FFFFFF',
+  width: 'device-width',
+  initialScale: 1,
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en-IN" className={fontVariables}>
+      <body>
+        <a href="#main" className="skip-link">
+          Skip to content
+        </a>
+
+        {/* Canvas at z-index 1, behind every section. Mounted client-side and
+            after paint; with JavaScript off, StaticFallback is all there is
+            and the page is fully readable. */}
+        <SceneMount />
+        <StaticFallback />
+        <SmoothScroll />
+
+        <Nav />
+        <main id="main" className="relative z-[3]">
+          {children}
+        </main>
+        <Footer />
+      </body>
+    </html>
+  );
+}
