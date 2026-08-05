@@ -18,10 +18,14 @@ Current gzipped transfer for `/`, measured against the exported site with
 | React runtime | 53 KB |
 | Next runtime | 45 KB |
 | @react-three/fiber | 45 KB |
-| Site code, routes, prefetches | ~43 KB |
-| **Total JavaScript** | **353 KB** |
+| Site code, routes, prefetches | ~44 KB |
+| **Total JavaScript, Full tier** | **354 KB** |
+| **Total JavaScript, Static tier** | **~114 KB** |
 | Fonts | 267 KB |
 | Images, incl. lazy textures | 189 KB |
+
+The Static tier now comes in comfortably under budget, because it no longer
+downloads three.js at all — see "what I did about it" below.
 
 The budget is 320KB. three.js alone is 167KB and React plus the Next runtime is
 about 98KB — 265KB before a single line of this site or any way to put three.js
@@ -40,6 +44,15 @@ What I did about it:
   Vietnamese and Eastern European glyphs this site has no use for.
 - The whole 3D bundle is dynamically imported and requested only after paint,
   so it never blocks text. The DOM is readable before three.js is fetched.
+- **Gated the 3D import behind tier detection.** This was a real bug, caught by
+  reading the Lighthouse waterfall: the tier was being decided *inside* Scene,
+  so rendering `<Scene />` triggered the chunk load and a Static-tier visitor
+  downloaded 674KB of three.js in order for it to return `null`. Precisely the
+  visitor who can least afford it. The decision moved up into `SceneMount`, and
+  Static-tier performance went from 70 to 85 with total blocking time falling
+  from 400ms to 40ms.
+- Made the Static-tier still `loading="lazy"`, so the preload scanner stops
+  fetching it on capable devices where it is hidden before first paint.
 
 What would actually get under 320KB, none of which I did because each changes
 the brief's own stack decisions: drop React on the 3D path and drive the canvas
@@ -225,26 +238,76 @@ two. Add AVIF in the asset pipeline when there is one.
 
 ---
 
-## 5. Not yet done
+## 5. Verification
+
+Lighthouse 12, run against the exported `out/` over a local static server, with
+the pinned Chromium in this container. Reproduce with `npm run build`, serve
+`out/`, then `npx lighthouse <url>`.
+
+| Page | Accessibility | Best practices | SEO |
+|---|---|---|---|
+| `/` | 100 | 100 | 100 |
+| `/business-concept/` | 100 | 100 | 100 |
+| `/our-journey/` | 100 | 100 | 100 |
+| `/about-us/` | 100 | 100 | 100 |
+| `/for-buyers/` | 100 | 100 | 100 |
+| `/contact-us/` | 100 | 100 | 100 |
+
+Two real accessibility defects were found and fixed rather than argued with:
+
+- Every muted grey below 65% of ink failed AA at 11–13px (the worst was 2.24:1).
+  The floor is now 65%, and brass got a second token — `--color-brass-deep`,
+  #82673A — for type. The brand brass stays #A8874E for rules and the mark,
+  where 3:1 is the bar and it passes.
+- The stat row's `<dl>` had `<p>` elements inside its `<div>` wrappers, which
+  the spec does not allow. The label is now a real `<dt>`, written first for
+  reading order and moved below the numeral with flex `order` — which also
+  removes the duplicate announcement the previous `sr-only` `<dt>` caused.
+
+### Performance, and what these numbers are worth
+
+| | Full tier | Static tier |
+|---|---|---|
+| Score | 51 | 85 |
+| First contentful paint | 1.1 s | 1.1 s |
+| Speed index | 2.9 s | 1.1 s |
+| Largest contentful paint | 5.1 s | 4.3 s |
+| Total blocking time | 8,320 ms | 40 ms |
+| Cumulative layout shift | **0** | **0** |
+
+**Read the Full-tier score with care.** There is no GPU in this container, so
+WebGL runs on SwiftShader and every frame the cone draws is rasterised on the
+CPU. That is what the 8.3 s of blocking time is. The Static tier — same page,
+same bytes, no canvas — blocks for 40 ms, which is the honest measure of what
+the site's own JavaScript costs. On real hardware the Full tier's blocking time
+should collapse toward the Static figure; I cannot prove by how much from here.
+
+CLS is 0 on both, which was a stated requirement and is hardware-independent.
+FCP at 1.1 s under Lighthouse's simulated Slow 4G comfortably clears the
+brief's 1.8 s target.
+
+The 95+ Lighthouse target is met on three of four categories. Performance is
+not, and will not be on a page with a 3D hero measured this way.
+
+---
+
+## 6. Not yet done
 
 Honest list of what is not finished:
 
-- **Lighthouse has not been run.** There is no Chrome-with-Lighthouse in this
-  environment. The structural work is done — static export, no render-blocking
-  JS, explicit image dimensions, semantic markup, JSON-LD — but the 95+ score
-  across all categories is unverified, and the JS budget above will cost
-  performance points on mobile.
 - **The Lite tier's 2D canvas thread** is not built. Lite currently runs the
   same Line2 thread at 120 nodes rather than a flat 2D bezier. It is cheap
-  enough that this may be fine, but it is not what the brief asked for and it
-  has not been profiled on real hardware.
-- **`split` fork** — see above.
+  enough that this may well be fine — the cone dominates the frame cost, not
+  the strand — but it is not what the brief asked for and it has not been
+  profiled on real hardware.
 - **Real-device performance is unmeasured.** Everything here was rendered
-  through SwiftShader in a headless container, which is fine for judging form,
-  lighting and composition and useless for judging frame rate. The 60fps
-  desktop / 30fps mobile floors are unverified. The frame watchdog and tier
-  downgrade are implemented and will catch a slow device, but the thresholds
-  want tuning against a real ₹12,000 Android.
-- **Route transitions** (indigo sheet wipes up, lotus holds 200ms, wipes off)
-  are not built. Navigation is currently a plain Next route change; the thread
-  persists because the canvas lives in the root layout and never unmounts.
+  through SwiftShader, which is fine for judging form, lighting and composition
+  and useless for judging frame rate. The 60fps desktop / 30fps mobile floors
+  are unverified. The frame watchdog and tier downgrade are implemented and
+  will catch a slow device, but the thresholds want tuning against a real
+  ₹12,000 Android.
+- **The intro sequence has not been seen end to end.** It is capped at 2.2 s,
+  skips on any input, skips entirely if the textures miss a 1.5 s deadline, and
+  runs once per session — all of which makes it awkward to capture in a
+  screenshot harness. The logic is straightforward and the caps are hard, but I
+  have not watched it play.

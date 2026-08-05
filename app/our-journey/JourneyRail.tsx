@@ -115,8 +115,8 @@ export function JourneyRail() {
                   opacity: era.depth === 2 ? 0.62 : era.depth === 1 ? 0.84 : 1,
                 }}
               >
-                <p className="num text-[13px] tracking-[0.06em] text-brass">{era.years}</p>
-                <p className="num mt-2 text-[11px] uppercase tracking-[0.14em] text-ink/40">
+                <p className="num text-[13px] tracking-[0.06em] text-brass-deep">{era.years}</p>
+                <p className="num mt-2 text-[11px] uppercase tracking-[0.14em] text-ink/65">
                   {era.place}
                 </p>
                 <h2
@@ -131,7 +131,7 @@ export function JourneyRail() {
                 <p className="measure mt-5 text-[17px] leading-[1.65] text-ink/70">
                   {era.body}
                 </p>
-                <p className="num mt-8 text-[11px] uppercase tracking-[0.14em] text-ink/25">
+                <p className="num mt-8 text-[11px] uppercase tracking-[0.14em] text-ink/65">
                   {String(i + 1).padStart(2, '0')} / {String(eras.length).padStart(2, '0')}
                 </p>
               </article>
@@ -139,7 +139,7 @@ export function JourneyRail() {
           </div>
         </div>
 
-        <p className="num absolute bottom-8 left-1/2 -translate-x-1/2 text-[11px] uppercase tracking-[0.16em] text-ink/30">
+        <p className="num absolute bottom-8 left-1/2 -translate-x-1/2 text-[11px] uppercase tracking-[0.16em] text-ink/65">
           Scroll
         </p>
       </div>
@@ -158,8 +158,8 @@ function StackedEras() {
             className="grid gap-5 border-b border-[var(--hairline)] py-12 md:grid-cols-[180px_1fr] md:gap-12"
           >
             <div>
-              <p className="num text-[13px] text-brass">{era.years}</p>
-              <p className="num mt-2 text-[11px] uppercase tracking-[0.14em] text-ink/40">
+              <p className="num text-[13px] text-brass-deep">{era.years}</p>
+              <p className="num mt-2 text-[11px] uppercase tracking-[0.14em] text-ink/65">
                 {era.place}
               </p>
             </div>

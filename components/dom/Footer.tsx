@@ -22,7 +22,7 @@ export function Footer() {
             <p className="font-display text-[24px] leading-snug">
               {company.name}
             </p>
-            <p className="measure mt-3 text-[15px] text-ink/60">
+            <p className="measure mt-3 text-[15px] text-ink/65">
               Yarn marketing agents for spinning mills across Tamil Nadu and South
               India since {company.founded}. Commission agents — no inventory held.
             </p>
@@ -65,14 +65,14 @@ export function Footer() {
                   {contact.email}
                 </a>
               </li>
-              <li className="num pt-2 text-[13px] text-ink/45">{contact.hours.display}</li>
+              <li className="num pt-2 text-[13px] text-ink/65">{contact.hours.display}</li>
             </ul>
           </div>
         </div>
 
         <hr className="rule mt-14" />
 
-        <div className="flex flex-col gap-4 pt-6 text-[13px] text-ink/45 md:flex-row md:items-center md:justify-between">
+        <div className="flex flex-col gap-4 pt-6 text-[13px] text-ink/65 md:flex-row md:items-center md:justify-between">
           <p className="num">
             © {company.founded}–{new Date().getFullYear()} {company.name}
           </p>

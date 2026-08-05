@@ -65,43 +65,43 @@ export default function ContactUs() {
             <div>
               <h2
                 data-thread="pass-left"
-                className="num text-[12px] uppercase tracking-[0.12em] text-ink/45"
+                className="num text-[12px] uppercase tracking-[0.12em] text-ink/65"
               >
                 Phone
               </h2>
               <ul className="mt-6 space-y-3 text-[19px]">
                 <li>
-                  <a className="num hover:text-brass" href={`tel:${contact.whatsapp}`}>
+                  <a className="num hover:text-brass-deep" href={`tel:${contact.whatsapp}`}>
                     {contact.whatsappDisplay}
                   </a>
-                  <span className="num ml-3 text-[11px] uppercase tracking-[0.1em] text-ink/40">
+                  <span className="num ml-3 text-[11px] uppercase tracking-[0.1em] text-ink/65">
                     mobile / whatsapp
                   </span>
                 </li>
                 {contact.landlines.map((n) => (
                   <li key={n}>
-                    <a className="num hover:text-brass" href={`tel:${n.replace(/\s/g, '')}`}>
+                    <a className="num hover:text-brass-deep" href={`tel:${n.replace(/\s/g, '')}`}>
                       {n}
                     </a>
                   </li>
                 ))}
               </ul>
-              <p className="num mt-7 text-[13px] text-ink/50">{contact.hours.display}</p>
+              <p className="num mt-7 text-[13px] text-ink/65">{contact.hours.display}</p>
             </div>
 
             <div>
-              <h2 className="num text-[12px] uppercase tracking-[0.12em] text-ink/45">
+              <h2 className="num text-[12px] uppercase tracking-[0.12em] text-ink/65">
                 Email
               </h2>
               <p className="mt-6 text-[19px]">
-                <a className="hover:text-brass" href={`mailto:${contact.email}`}>
+                <a className="hover:text-brass-deep" href={`mailto:${contact.email}`}>
                   {contact.email}
                 </a>
               </p>
             </div>
 
             <div>
-              <h2 className="num text-[12px] uppercase tracking-[0.12em] text-ink/45">
+              <h2 className="num text-[12px] uppercase tracking-[0.12em] text-ink/65">
                 Office
               </h2>
               <address className="mt-6 not-italic text-[17px] leading-[1.6]">
@@ -143,7 +143,7 @@ export default function ContactUs() {
             rel="noopener noreferrer"
             className="group block border border-[var(--hairline)] p-10 transition-colors hover:border-ink/25 md:p-16"
           >
-            <p className="num text-[12px] uppercase tracking-[0.12em] text-brass">
+            <p className="num text-[12px] uppercase tracking-[0.12em] text-brass-deep">
               Maruthamalai Road
             </p>
             <p className="display-md mt-4 text-[clamp(24px,3vw,40px)] leading-[1.1]">

@@ -35,8 +35,8 @@ export default function AboutUs() {
                 className="grid gap-6 border-b border-[var(--hairline)] py-14 md:grid-cols-[200px_1fr] md:gap-14"
               >
                 <div>
-                  <p className="num text-[13px] text-brass">{g.span}</p>
-                  <p className="num mt-2 text-[12px] uppercase tracking-[0.1em] text-ink/40">
+                  <p className="num text-[13px] text-brass-deep">{g.span}</p>
+                  <p className="num mt-2 text-[12px] uppercase tracking-[0.1em] text-ink/65">
                     {g.base}
                   </p>
                 </div>
@@ -47,10 +47,10 @@ export default function AboutUs() {
                   >
                     {g.name}
                     {g.alias && (
-                      <span className="text-ink/45"> (alias {g.alias})</span>
+                      <span className="text-ink/65"> (alias {g.alias})</span>
                     )}
                   </h2>
-                  <p className="num mt-3 text-[12px] uppercase tracking-[0.1em] text-ink/40">
+                  <p className="num mt-3 text-[12px] uppercase tracking-[0.1em] text-ink/65">
                     {g.origin}
                   </p>
                   <p className="measure mt-6 text-[17px] leading-[1.65] text-ink/75">

@@ -25,7 +25,7 @@ export default function ForBuyers() {
               WhatsApp us the count
             </WhatsAppCta>
           </div>
-          <p className="num mt-6 text-[13px] text-ink/50">
+          <p className="num mt-6 text-[13px] text-ink/65">
             or call{' '}
             <a className="hover:text-ink" href={`tel:${contact.whatsapp}`}>
               {contact.whatsappDisplay}
@@ -58,7 +58,7 @@ export default function ForBuyers() {
                   </li>
                 ))}
               </ul>
-              <p className="measure mt-8 text-[15px] leading-[1.6] text-ink/55">
+              <p className="measure mt-8 text-[15px] leading-[1.6] text-ink/65">
                 Counts vary with what our principals are running. Ask for a
                 count that is not listed — we will tell you which mills have it
                 and what the current price is.
@@ -80,7 +80,7 @@ export default function ForBuyers() {
                     <span className="text-[17px]">{m.name}</span>
                     <span className="flex items-baseline gap-4">
                       {m.detail && (
-                        <span className="num text-[12px] uppercase tracking-[0.1em] text-ink/55">
+                        <span className="num text-[12px] uppercase tracking-[0.1em] text-ink/65">
                           {m.detail}
                         </span>
                       )}

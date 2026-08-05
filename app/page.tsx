@@ -85,7 +85,7 @@ export default function Home() {
                     i === 0 ? '' : 'border-t border-[var(--hairline)]'
                   }`}
                 >
-                  <dt className="num text-[12px] uppercase tracking-[0.1em] text-ink/45 pt-[3px]">
+                  <dt className="num text-[12px] uppercase tracking-[0.1em] text-ink/65 pt-[3px]">
                     {t.term}
                   </dt>
                   <dd className="text-[16px] leading-[1.6] text-ink/80">{t.detail}</dd>
@@ -120,7 +120,7 @@ export default function Home() {
                     i === 0 ? '' : 'border-t border-[var(--hairline)]'
                   }`}
                 >
-                  <span className="num text-[12px] text-brass">
+                  <span className="num text-[12px] text-brass-deep">
                     {String(i + 1).padStart(2, '0')}
                   </span>
                   {t}
@@ -131,16 +131,20 @@ export default function Home() {
         </Shell>
       </Section>
 
-      {/* ------------------------------------------------------------- fork */}
-      <Section className="py-[16vh]" data-thread="split">
+      {/* ------------------------------------------------------------- fork
+          `behind` drops this section below the canvas so the two forked
+          strands lie *over* the cards. Everywhere else the thread ducks behind
+          opaque content; here it must not, because the whole point of the
+          split is that one strand runs across each choice. */}
+      <Section behind className="py-[16vh]">
         <Shell>
           <p className="eyebrow mb-12">Two ways in</p>
-          <div className="grid gap-px bg-[var(--hairline)] md:grid-cols-2">
+          <div data-thread="split" className="grid gap-px bg-[var(--hairline)] md:grid-cols-2">
             <Link
               href="/business-concept/"
               className="group bg-paper p-10 transition-colors hover:bg-paper-2 md:p-14"
             >
-              <p className="num text-[12px] uppercase tracking-[0.12em] text-brass">
+              <p className="num text-[12px] uppercase tracking-[0.12em] text-brass-deep">
                 For spinning mills
               </p>
               <h3 className="display-md mt-5 text-[clamp(26px,2.8vw,38px)] leading-[1.12]">
@@ -159,7 +163,7 @@ export default function Home() {
               href="/for-buyers/"
               className="group bg-paper p-10 transition-colors hover:bg-paper-2 md:p-14"
             >
-              <p className="num text-[12px] uppercase tracking-[0.12em] text-brass">
+              <p className="num text-[12px] uppercase tracking-[0.12em] text-brass-deep">
                 For weavers and buyers
               </p>
               <h3 className="display-md mt-5 text-[clamp(26px,2.8vw,38px)] leading-[1.12]">

@@ -18,7 +18,7 @@ export function PrincipalWall() {
           >
             Mills we have represented
           </h2>
-          <p className="measure text-[15px] leading-[1.6] text-ink/55 md:max-w-[34ch]">
+          <p className="measure text-[15px] leading-[1.6] text-ink/65 md:max-w-[34ch]">
             Some of these mandates ran for over a decade. Dates are being
             confirmed with the mills before they are published.
           </p>
@@ -37,12 +37,12 @@ export function PrincipalWall() {
               <p className="text-[17px] leading-[1.35]">{p.name}</p>
               <div className="mt-6">
                 {p.note && (
-                  <p className="num text-[11px] uppercase tracking-[0.12em] text-ink/35">
+                  <p className="num text-[11px] uppercase tracking-[0.12em] text-ink/65">
                     {p.note}
                   </p>
                 )}
                 {p.span && p.spanConfirmed ? (
-                  <p className="num mt-1 text-[13px] text-brass">{p.span}</p>
+                  <p className="num mt-1 text-[13px] text-brass-deep">{p.span}</p>
                 ) : (
                   <p className="mt-1">
                     <Unconfirmed>dates to confirm</Unconfirmed>

@@ -83,8 +83,19 @@ npx serve out -l 4173
 npm run measure -- http://localhost:4173/
 ```
 
-Reports gzipped transfer by type and per JavaScript file. See `DECISIONS.md`
-for where the payload currently sits against the brief's budget.
+Reports gzipped transfer by type and per JavaScript file.
+
+Lighthouse, against the same server:
+
+```bash
+npx lighthouse http://localhost:4173/ --view
+```
+
+To measure the Static tier — no canvas, which is what a low-end device gets —
+add `--chrome-flags="--force-prefers-reduced-motion"`. That is the number to
+watch on this project: the Full-tier score is dominated by whatever GPU the
+machine running the audit has. See `DECISIONS.md` for current results and for
+where the payload sits against the brief's budget.
 
 ---
 
@@ -138,8 +149,25 @@ upgraded mid-session.
 | Lite | Mobile, coarse pointer, <1024px, low memory/cores | Half-resolution lathe, no real wraps, no fuzz shell, no shadows, DPR 1, 4×3 weave |
 | Static | No WebGL2, `prefers-reduced-motion`, or Save-Data | No canvas at all — a still of the cone and a hairline rule |
 
+The tier is decided in `SceneMount`, *before* the dynamic import is rendered,
+so the Static tier never downloads the 3D bundle. Deciding it inside `Scene`
+looks equivalent and is not — rendering the component is what triggers the
+chunk load.
+
 `prefers-reduced-motion: reduce` forces Static and disables Lenis, the
 odometers and the journey pin.
+
+**Page transitions.** Internal link clicks are intercepted in the capture
+phase: an indigo sheet wipes up, the lotus holds, then the sheet lifts once
+`usePathname` reports the new route has committed. Skipped entirely under
+reduced motion. The canvas is never touched — it lives in the root layout and
+never unmounts, which is what lets the thread persist across routes.
+
+**Stacking.** `<main>` deliberately carries no `z-index`. Giving it one creates
+a stacking context that traps every section inside it, so a section asking to
+sit *below* the canvas gets stuck above it along with all its siblings.
+Sections declare their own layer: `z-[3]` by default, `z-0` via the `behind`
+prop where the thread should pass in front (the mills/buyers fork does this).
 
 **Content.** No CMS. Everything is in `data/`, typed. Values the client has not
 yet confirmed carry a `TODO: confirm` in the data and render with a visible

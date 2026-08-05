@@ -16,6 +16,7 @@ import {
   type Route,
 } from '@/lib/anchors';
 import { pointer } from '@/lib/pointer';
+import { ThreadFork } from './ThreadFork';
 import { threadOverride } from '@/lib/threadOverride';
 
 /**
@@ -235,7 +236,12 @@ export function Thread({ payoff, payoffActive }: Props) {
     writeGeometry(line, sim.px, sim.py);
   });
 
-  return <primitive object={line} />;
+  return (
+    <>
+      <primitive object={line} />
+      <ThreadFork route={routeRef} />
+    </>
+  );
 }
 
 /**

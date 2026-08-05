@@ -119,7 +119,7 @@ export function TextLink({
 /** A value that has not been confirmed by the client yet. */
 export function Unconfirmed({ children }: { children: ReactNode }) {
   return (
-    <span className="num text-[11px] uppercase tracking-[0.12em] text-ink/35" title="Not yet confirmed">
+    <span className="num text-[11px] uppercase tracking-[0.12em] text-ink/65" title="Not yet confirmed">
       {children}
     </span>
   );

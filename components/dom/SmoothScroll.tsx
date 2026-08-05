@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import Lenis from 'lenis';
 import { setViewportHeight, writeScroll } from '@/lib/scroll';
 import { prefersReducedMotion } from '@/lib/tier';
+import { lenisRef } from '@/lib/lenisInstance';
 
 /**
  * Lenis owns scrolling and is the single writer to the scroll store.
@@ -55,6 +56,8 @@ export function SmoothScroll() {
       writeScroll(e.scroll, e.velocity * 60, limit());
     });
 
+    lenisRef.current = lenis;
+
     let raf = 0;
     const loop = (t: number) => {
       lenis.raf(t);
@@ -64,6 +67,7 @@ export function SmoothScroll() {
 
     return () => {
       cancelAnimationFrame(raf);
+      lenisRef.current = null;
       lenis.destroy();
       window.removeEventListener('resize', onResize);
     };

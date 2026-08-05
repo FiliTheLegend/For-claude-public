@@ -42,6 +42,13 @@ export function StaticFallback() {
           width={720}
           height={900}
           decoding="async"
+          // Lazy specifically so that a *hidden* still is never fetched. The
+          // inline probe in the head hides this before first paint on capable
+          // devices, but the preload scanner runs ahead of CSS and was pulling
+          // the image down anyway. A lazy image that is display:none is
+          // skipped outright, and one that is on screen — the Static tier,
+          // where this is the hero — loads immediately regardless.
+          loading="lazy"
           className="absolute right-[4vw] top-[20vh] h-auto w-[42vw] max-w-[360px] md:right-[9vw] md:top-[16vh]"
         />
       </picture>

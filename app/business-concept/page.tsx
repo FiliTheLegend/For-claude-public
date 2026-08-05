@@ -43,7 +43,7 @@ export default function BusinessConcept() {
                 key={t.term}
                 className="grid gap-3 border-b border-[var(--hairline)] py-8 md:grid-cols-[220px_1fr] md:gap-10"
               >
-                <dt className="num text-[12px] uppercase tracking-[0.12em] text-ink/45 md:pt-[6px]">
+                <dt className="num text-[12px] uppercase tracking-[0.12em] text-ink/65 md:pt-[6px]">
                   {t.term}
                 </dt>
                 <dd className="measure text-[18px] leading-[1.6]">{t.detail}</dd>
@@ -71,7 +71,7 @@ export default function BusinessConcept() {
                       i === 0 ? '' : 'border-t border-[var(--hairline)]'
                     }`}
                   >
-                    <span className="num text-[12px] text-brass pt-[6px]">
+                    <span className="num text-[12px] text-brass-deep pt-[6px]">
                       {String(i + 1).padStart(2, '0')}
                     </span>
                     {w}
@@ -98,7 +98,7 @@ export default function BusinessConcept() {
               </ul>
 
               <h3 className="display-md mt-16 text-[24px]">Current mandates</h3>
-              <p className="mt-3 text-[14px] text-ink/45">
+              <p className="mt-3 text-[14px] text-ink/65">
                 Client-supplied, being confirmed before publication.
               </p>
               <ul className="mt-6 space-y-0">
@@ -112,7 +112,7 @@ export default function BusinessConcept() {
                     <span className="text-[17px]">{m.name}</span>
                     <span className="flex items-baseline gap-4">
                       {m.detail && (
-                        <span className="num text-[12px] uppercase tracking-[0.1em] text-ink/55">
+                        <span className="num text-[12px] uppercase tracking-[0.1em] text-ink/65">
                           {m.detail}
                         </span>
                       )}

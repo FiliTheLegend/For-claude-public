@@ -10,6 +10,7 @@ export function LotusMark({
   strokeWidth = 1.25,
   title,
   draw = false,
+  style,
 }: {
   size?: number;
   className?: string;
@@ -17,6 +18,7 @@ export function LotusMark({
   title?: string;
   /** Draw the mark on in a single stroke, as the tail of the footer knot. */
   draw?: boolean;
+  style?: React.CSSProperties;
 }) {
   return (
     <svg
@@ -25,6 +27,7 @@ export function LotusMark({
       viewBox="0 0 48 48"
       fill="none"
       className={className}
+      style={style}
       role={title ? 'img' : 'presentation'}
       aria-hidden={title ? undefined : true}
       aria-label={title}

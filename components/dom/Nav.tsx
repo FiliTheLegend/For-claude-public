@@ -44,7 +44,7 @@ export function Nav() {
                   href={l.href}
                   aria-current={active ? 'page' : undefined}
                   className={`text-[14px] transition-colors ${
-                    active ? 'text-ink' : 'text-ink/60 hover:text-ink'
+                    active ? 'text-ink' : 'text-ink/65 hover:text-ink'
                   }`}
                 >
                   {l.label}

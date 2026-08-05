@@ -14,10 +14,15 @@ export function StatRow() {
       <Shell>
         <hr className="rule" />
         <dl className="grid grid-cols-2 gap-y-14 py-16 md:grid-cols-4">
+          {/* A <div> inside a <dl> may contain only <dt> and <dd> — no <p>.
+              The term is written first, so that is the order a screen reader
+              reads it in, then moved below the numeral visually with flex
+              order. That avoids the usual workaround of duplicating the label
+              into an sr-only <dt>, which announces it twice. */}
           {stats.map((s) => (
             <div key={s.label} className="flex flex-col items-start gap-3">
-              <dt className="sr-only">{s.label}</dt>
-              <dd>
+              <dt className="order-2 text-[15px] text-ink/70">{s.label}</dt>
+              <dd className="order-1">
                 <span
                   data-thread="wrap"
                   className="num inline-block text-[clamp(38px,4.6vw,64px)] leading-none tracking-[-0.03em]"
@@ -26,10 +31,9 @@ export function StatRow() {
                   {s.suffix}
                 </span>
               </dd>
-              <p className="text-[15px] text-ink/70">{s.label}</p>
-              <p className="num text-[11px] uppercase tracking-[0.12em] text-ink/35">
+              <dd className="num order-3 text-[11px] uppercase tracking-[0.12em] text-ink/65">
                 {s.note}
-              </p>
+              </dd>
             </div>
           ))}
         </dl>

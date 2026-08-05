@@ -195,9 +195,17 @@ export function buildRoute(anchors: Anchor[], vw: number, docHeight: number): Ro
       case 'split':
         // The main strand runs the centre; the fork is drawn as a second
         // geometry so both halves can carry the same material.
+        // Bow each strand out to the middle of its half, so on a two-card
+        // fork one strand runs over each card rather than hugging the page
+        // edges.
         fork = compact
           ? null
-          : { start: a.top, end: a.bottom, left: a.left + 40, right: a.right - 40 };
+          : {
+              start: a.top - 24,
+              end: a.bottom + 24,
+              left: a.left + (a.right - a.left) * 0.25,
+              right: a.left + (a.right - a.left) * 0.75,
+            };
         push(compact ? rail : cx, a.top - 10);
         push(compact ? rail : cx, a.bottom + 10);
         break;

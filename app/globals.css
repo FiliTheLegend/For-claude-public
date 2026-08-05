@@ -7,6 +7,11 @@
   --color-indigo: #1c3055;
   --color-indigo-deep: #0e1b33;
   --color-brass: #a8874e;
+  /* Brass is 3.36:1 on paper. That passes for rules and marks, which only
+     need 3:1 as non-text graphics, but fails for type. This is the same hue
+     taken down so it clears 4.5:1 on both paper and paper-2 so numerals and eyebrows can carry the colour without
+     failing WCAG AA. */
+  --color-brass-deep: #82673a;
 
   --font-display: var(--font-newsreader), Georgia, 'Times New Roman', serif;
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
@@ -115,7 +120,7 @@
     font-size: 11px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: color-mix(in oklab, var(--color-ink) 55%, transparent);
+    color: color-mix(in oklab, var(--color-ink) 68%, transparent);
   }
 
   .skip-link {

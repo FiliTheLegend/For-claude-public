@@ -3,6 +3,7 @@ import { fontVariables } from './fonts';
 import { Nav } from '@/components/dom/Nav';
 import { Footer } from '@/components/dom/Footer';
 import { SmoothScroll } from '@/components/dom/SmoothScroll';
+import { RouteTransition } from '@/components/dom/RouteTransition';
 import { SceneMount } from '@/components/three/SceneMount';
 import { StaticFallback } from '@/components/dom/StaticFallback';
 import './globals.css';
@@ -32,9 +33,13 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-IN" className={fontVariables}>
+    <html lang="en-IN" className={fontVariables} suppressHydrationWarning>
       <head>
         {/*
+          `suppressHydrationWarning` on <html> is required: this script sets a
+          data attribute on the element React is about to hydrate, so without
+          it React reports a mismatch on every single page load.
+
           The Static-tier still is in the server HTML on purpose — it is what a
           visitor with JavaScript disabled gets. But on a capable device that
           means a frame of cone image before React can decide the tier and
@@ -64,9 +69,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SceneMount />
         <StaticFallback />
         <SmoothScroll />
+        <RouteTransition />
 
         <Nav />
-        <main id="main" className="relative z-[3]">
+        {/* No z-index here on purpose. A z-index on <main> creates a stacking
+            context, which traps every section inside it — a section asking to
+            sit *below* the canvas would be stuck above it along with all its
+            siblings. Sections declare their own layer instead. */}
+        <main id="main" className="relative">
           {children}
         </main>
         <Footer />
